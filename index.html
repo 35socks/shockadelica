@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shockadelica Films — Female‑Led Music Videography</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.cdnfonts.com/css/psycha" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FullCalendar -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <style>
+        :root {
+            --font-logo: "Psycha", serif;
+            --font-body: "Inter", sans-serif;
+            --dark-orange: #8B2500;
+            --warm-orange: #D2691E;
+            --light-orange: #FF8C00;
+            --yellow: #FFB000;
+            --cream: #FFF8DC;
+            --warm-white: #FFFEF7;
+            --text-dark: #2D1810;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            background: var(--warm-white);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Psychedelic smooth gradient (emphasise #FFCF80 and rgba(255,140,0,0.95)) */
+        .psychedelic-bg {
+            position: absolute;
+            inset: 0;
+            /* Two large, soft radial gradients blended together.
+               Central focus uses #FFCF80 and strong warm orange rgba(255,140,0,0.95). */
+            background-image:
+            radial-gradient(circle at 25% 30%,
+            #FFCF80 0%,
+            rgba(255,244,223,0.95) 6%,
+            rgba(255,140,0,0.95) 20%,
+            rgba(255,176,0,0.45) 48%,
+            rgba(139,37,0,0.85) 100%
+            ),
+            radial-gradient(circle at 75% 70%,
+            rgba(255,140,0,0.95) 0%,
+            rgba(255,176,0,0.6) 28%,
+            rgba(184,70,14,0.45) 60%,
+            rgba(139,37,0,0.85) 100%
+            );
+            background-repeat: no-repeat;
+            /* larger than viewport to avoid visible blur seams */
+            background-size: 240% 240%;
+            background-position: center;
+            filter: blur(34px) saturate(1.08);
+            pointer-events: none;
+            will-change: background-position, filter;
+            /* slightly slower, very gentle movement */
+            animation: bgShift 45s ease-in-out infinite;
+        }
+
+        /* Soft overlay to add depth and warm highlights */
+        .psychedelic-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+            conic-gradient(from 140deg at 50% 50%,
+            rgba(255,140,0,0.06),
+            rgba(255,176,0,0.06),
+            rgba(210,105,30,0.04),
+            rgba(139,37,0,0.03),
+            rgba(255,140,0,0.06)
+            );
+            mix-blend-mode: overlay;
+            opacity: 0.88;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation: overlayPulse 30s ease-in-out infinite;
+        }
+
+        /* Move the gradient positions smoothly and widely to avoid tiling artifacts */
+        @keyframes bgShift {
+            0% {
+            background-position: -12% -8%, 112% 108%;
+            filter: blur(32px) saturate(1.06);
+            }
+            25% {
+            background-position: 18% 28%, 82% 72%;
+            filter: blur(34px) saturate(1.08);
+            }
+            50% {
+            background-position: 50% 60%, 60% 40%;
+            filter: blur(36px) saturate(1.10);
+            }
+            75% {
+            background-position: 32% 42%, 94% 58%;
+            filter: blur(34px) saturate(1.07);
+            }
+            100% {
+            background-position: -12% -8%, 112% 108%;
+            filter: blur(32px) saturate(1.06);
+            }
+        }
+
+        @keyframes overlayPulse {
+            0% {
+            transform: scale(1);
+            opacity: 0.84;
+            }
+            50% {
+            transform: scale(1.035);
+            opacity: 0.92;
+            }
+            100% {
+            transform: scale(1);
+            opacity: 0.84;
+            }
+        }
+
+        /* Ensure header content sits above the background */
+        .header .psychedelic-bg,
+        .header .psychedelic-overlay {
+            z-index: 1;
+        }
+        .header > .text-center {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header styling */
+        .header {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-text {
+            font-family: var(--font-logo);
+            font-size: clamp(4rem, 8vw, 8rem);
+            font-weight: 900;
+            color: var(--cream);
+            text-shadow: 
+                4px 4px 8px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(255, 176, 0, 0.3);
+            letter-spacing: 4px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Button styling */
+        .header-buttons {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .header-btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-calendar {
+            background: rgba(255, 248, 220, 0.95);
+            color: var(--dark-orange);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 176, 0, 0.3);
+        }
+
+        .btn-calendar:hover {
+            background: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-browse {
+            background: rgba(139, 37, 0, 0.8);
+            color: var(--cream);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 176, 0, 0.4);
+        }
+
+        .btn-browse:hover {
+            background: rgba(139, 37, 0, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Content sections */
+        .content-section {
+            background: var(--warm-white);
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Calendar styling */
+        .calendar-section {
+            padding: 80px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .calendar-container {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 40px rgba(139, 37, 0, 0.1);
+            border: 2px solid rgba(255, 176, 0, 0.2);
+        }
+
+        .section-title {
+            font-family: var(--font-body);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-orange);
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .fc-event {
+            background: linear-gradient(135deg, var(--warm-orange), var(--dark-orange)) !important;
+            border: none !important;
+            color: white !important;
+            border-radius: 8px !important;
+        }
+
+        .fc-daygrid-day:hover {
+            background: rgba(255, 176, 0, 0.1) !important;
+            cursor: pointer;
+        }
+
+        /* Package cards */
+        .packages-section {
+            padding: 80px 24px;
+            background: linear-gradient(180deg, var(--warm-white) 0%, #FFF5E6 100%);
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 40px rgba(139, 37, 0, 0.1);
+            border: 2px solid rgba(255, 176, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--warm-orange), var(--yellow), var(--light-orange));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(139, 37, 0, 0.2);
+            border-color: var(--warm-orange);
+        }
+
+        .package-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .package-title {
+            font-family: var(--font-body);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark-orange);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .package-price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--warm-orange);
+            margin-bottom: 32px;
+        }
+
+        .package-description {
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .package-features {
+            flex-grow: 1;
+            margin-bottom: 32px;
+        }
+
+        .package-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(139, 37, 0, 0.1);
+            color: var(--text-dark);
+        }
+
+        .package-features li:last-child {
+            border-bottom: none;
+        }
+
+        .package-features li strong {
+            color: var(--dark-orange);
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, var(--warm-orange), var(--dark-orange));
+            color: white;
+            padding: 18px 36px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(139, 37, 0, 0.3);
+        }
+
+        /* Portfolio styling */
+        .portfolio-section {
+            padding: 80px 24px;
+            background: white;
+        }
+
+        .portfolio-item {
+            background: linear-gradient(135deg, var(--light-orange), var(--warm-orange));
+            height: 300px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover::before {
+            opacity: 0;
+        }
+
+        .owl-nav button {
+            background: var(--warm-orange) !important;
+            color: white !important;
+            border-radius: 50% !important;
+            width: 50px !important;
+            height: 50px !important;
+            font-size: 20px !important;
+        }
+
+        .owl-dots .owl-dot span {
+            background: var(--warm-orange) !important;
+        }
+
+        /* About section */
+        .about-section {
+            padding: 80px 24px;
+            background: linear-gradient(180deg, white 0%, #FFF8E7 100%);
+        }
+
+        .about-content {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 12px 40px rgba(139, 37, 0, 0.1);
+            border: 2px solid rgba(255, 176, 0, 0.15);
+            max-width: 800px;
+            margin: 0 auto 48px auto;
+        }
+
+        .donate-section {
+            background: linear-gradient(135deg, var(--cream), #FFF0D1);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid rgba(255, 176, 0, 0.2);
+        }
+
+        .donate-btn {
+            background: linear-gradient(135deg, var(--yellow), var(--light-orange));
+            color: white;
+            padding: 18px 48px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 176, 0, 0.4);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--cream);
+            text-align: center;
+            z-index: 10;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .header-buttons {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .header-btn {
+                width: 250px;
+                text-align: center;
+            }
+
+            .packages-section .container {
+                grid-template-columns: 1fr;
+            }
+
+            .package-card {
+                height: auto;
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Psychedelic Header -->
+    <header class="header">
+        <div class="psychedelic-bg"></div>
+        <div class="psychedelic-overlay"></div>
+        
+        <div class="text-center">
+            <h1 class="logo-text">SHOCKADELICA FILMS</h1>
+            <div class="header-buttons">
+                <a href="#calendar-section" class="header-btn btn-calendar">Book Your Session</a>
+                <a href="#packages-section" class="header-btn btn-browse">Browse Packages</a>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <span class="scroll-arrow">↓</span>
+            <p>Scroll to explore</p>
+        </div>
+    </header>
+
+    <!-- Calendar Section -->
+    <section id="calendar-section" class="content-section">
+        <div class="calendar-section">
+            <h2 class="section-title">Book Your Session</h2>
+            <div class="calendar-container">
+                <div id="calendar"></div>
+                <p class="text-center mt-6 text-gray-600">Click any available date to book your session</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages-section" class="content-section">
+        <div class="packages-section">
+            <div class="container mx-auto max-w-7xl">
+                <h2 class="section-title">Our Packages</h2>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Videography -->
+                    <div class="package-card">
+                        <div class="package-title">Videography</div>
+                        <div class="package-price">From £40</div>
+                        <p class="package-description">Professional music video production with multiple tiers to suit your needs and budget.</p>
+                        <div class="package-features">
+                            <ul class="space-y-2">
+                                <li><strong>Tier 1 (£40):</strong> Single camera, quick edit, 3-5 minutes</li>
+                                <li><strong>Tier 2 (£80):</strong> Multi-camera setup, professional edit</li>
+                                <li><strong>Tier 3 (£150):</strong> Full production with lighting and effects</li>
+                                <li>48-72 hour turnaround</li>
+                                <li>All raw footage included</li>
+                                <li>Social media cuts provided</li>
+                            </ul>
+                        </div>
+                        <a href="#calendar-section" class="book-btn">Book Videography</a>
+                    </div>
+
+                    <!-- Photography -->
+                    <div class="package-card">
+                        <div class="package-title">Photography</div>
+                        <div class="package-price">From £15</div>
+                        <p class="package-description">Psychedelic-inspired photography sessions with professional editing and creative flair.</p>
+                        <div class="package-features">
+                            <ul class="space-y-2">
+                                <li><strong>Tier 1 (£15):</strong> 30-40 edited photos</li>
+                                <li><strong>Tier 2 (£25):</strong> 60-80 photos, creative editing</li>
+                                <li><strong>Tier 3 (£40):</strong> 100-125 photos, full gallery</li>
+                                <li>High resolution files</li>
+                                <li>Print-ready formats</li>
+                                <li>Social media optimized versions</li>
+                            </ul>
+                        </div>
+                        <a href="#calendar-section" class="book-btn">Book Photography</a>
+                    </div>
+
+                    <!-- Promo/Interviews -->
+                    <div class="package-card">
+                        <div class="package-title">Promo & Interviews</div>
+                        <div class="package-price">From £25</div>
+                        <p class="package-description">Professional interviews and promotional content to boost your presence and engage your audience.</p>
+                        <div class="package-features">
+                            <ul class="space-y-2">
+                                <li><strong>Tier 1 (£25):</strong> Short social media clips</li>
+                                <li><strong>Tier 2 (£50):</strong> Full interview, edited content</li>
+                                <li><strong>Tier 3 (£80):</strong> Complete promotional package</li>
+                                <li>Professional audio recording</li>
+                                <li>Multiple format delivery</li>
+                                <li>Custom graphics and titles</li>
+                            </ul>
+                        </div>
+                        <a href="#calendar-section" class="book-btn">Book Promo Session</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Section -->
+        <div class="portfolio-section">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="section-title">Our Work</h2>
+
+                <!-- Video Portfolio -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8 text-center" style="color: var(--dark-orange);">Video Portfolio</h3>
+                    <div class="owl-carousel video-carousel">
+                        <div class="portfolio-item">Video Project 1</div>
+                        <div class="portfolio-item">Video Project 2</div>
+                        <div class="portfolio-item">Video Project 3</div>
+                        <div class="portfolio-item">Video Project 4</div>
+                        <div class="portfolio-item">Video Project 5</div>
+                    </div>
+                </div>
+
+                <!-- Photo Portfolio -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8 text-center" style="color: var(--dark-orange);">Photo Gallery</h3>
+                    <div class="owl-carousel photo-carousel">
+                        <div class="portfolio-item">Photo Set 1</div>
+                        <div class="portfolio-item">Photo Set 2</div>
+                        <div class="portfolio-item">Photo Set 3</div>
+                        <div class="portfolio-item">Photo Set 4</div>
+                        <div class="portfolio-item">Photo Set 5</div>
+                    </div>
+                </div>
+
+                <!-- Promo Portfolio -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8 text-center" style="color: var(--dark-orange);">Promo Work</h3>
+                    <div class="owl-carousel promo-carousel">
+                        <div class="portfolio-item">Interview 1</div>
+                        <div class="portfolio-item">Promo Video 1</div>
+                        <div class="portfolio-item">Behind the Scenes</div>
+                        <div class="portfolio-item">Artist Feature</div>
+                        <div class="portfolio-item">Festival Coverage</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="about-section">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="section-title">About Shockadelica Films</h2>
+                
+                <div class="about-content">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
+                    </p>
+                    
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
+                    </p>
+                </div>
+
+                <!-- Donate Section -->
+                <div class="donate-section">
+                    <h3 class="text-2xl font-semibold mb-4" style="color: var(--dark-orange);">
+                        Support Our Creative Projects
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-8">
+                        Help us fund our short films and experimental projects. Every donation goes directly toward 
+                        creating bold, independent content that pushes creative boundaries.
+                    </p>
+                    <a href="https://paypal.com/donate" target="_blank" class="donate-btn">
+                        Donate Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let calendar = null;
+
+        // Initialize calendar
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            if (calendarEl) {
+                calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    selectable: true,
+                    height: 400,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth'
+                    },
+                    events: [
+                        { title: 'Booked', start: '2024-06-15' },
+                        { title: 'Booked', start: '2024-06-22' },
+                        { title: 'Booked', start: '2024-06-29' }
+                    ],
+                    select: function(info) {
+                        const selectedDate = new Date(info.startStr).toLocaleDateString('en-GB');
+                        if (confirm(`Book session for ${selectedDate}?\n\nWe'll contact you within 24 hours to confirm details.`)) {
+                            alert('Booking request sent! We\'ll be in touch soon.');
+                        }
+                    }
+                });
+                calendar.render();
+            }
+
+            // Initialize Owl Carousels
+            $('.video-carousel').owlCarousel({
+                loop: true,
+                margin: 16,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 2 },
+                    1000: { items: 3 }
+                }
+            });
+
+            $('.photo-carousel').owlCarousel({
+                loop: true,
+                margin: 16,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 4500,
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 2 },
+                    1000: { items: 4 }
+                }
+            });
+
+            $('.promo-carousel').owlCarousel({
+                loop: true,
+                margin: 16,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 2 },
+                    1000: { items: 3 }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
