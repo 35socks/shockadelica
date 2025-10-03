@@ -3,7 +3,28 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Shockadelica Films — Female‑Led Music Videography</title>
+    <title>Shockadelica Films | Female‑Led Music Media</title>
+    <meta name="description" content="Shockadelica Films is a female-led creative media company specialising in music photography, gig videography, promo videos, and bespoke artist promotion across Glasgow and Ayrshire." />
+   <meta name="keywords" content="Music Photography, Gig Videography, Promo Videos, Artist Promotion, Scotland" />
+    <meta name="author" content="Shockadelica Films">
+    <link rel="canonical" href="https://shockadelicafilms.com" />
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Shockadelica Films | Female‑Led Music Media">
+    <meta property="og:description" content="Experience innovative music media production with our female‑led team offering bespoke photography, videography, and promos.">
+    <meta property="og:image" content="https://shockadelicafilms.com/images/og-image.jpg">
+    <meta property="og:url" content="https://shockadelicafilms.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Shockadelica Films">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shockadelica Films | Female‑Led Music Media">
+    <meta name="twitter:description" content="Experience innovative music media production with our female‑led team offering bespoke photography, videography, and promos.">
+    <meta name="twitter:image" content="https://shockadelicafilms.com/images/og-image.jpg">
 
     <!-- Fonts -->
     <link href="https://fonts.cdnfonts.com/css/psycha" rel="stylesheet">
@@ -196,31 +217,31 @@
 <body>
     <!-- Header -->
     <header class="header" role="banner" aria-label="Hero header — Shockadelica Films" style="position:relative;">
-    <div class="header-bg" aria-hidden="true" style="position:absolute; inset:0; background-image:url('images/header-bg.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; filter:brightness(0.78) saturate(1.05) contrast(0.98); z-index:0; pointer-events:none;"></div>
+    <div class="header-bg" aria-hidden="true" style="position:absolute; inset:0; background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('images/header-bg.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; filter:brightness(0.78) saturate(1.05) contrast(0.98); z-index:0; pointer-events:none;"></div>
 
 
-        <div class="text-center" style="position:relative; z-index:10; padding: 24px;">
-            <div style="max-width:640px; width:min(86vw,640px); margin:0 auto; position:relative; z-index:10; text-align:center;">
-                <img src="images/header-front.png" alt="Shockadelica Films" loading="lazy"
-                     style="width:100%; height:auto; display:block;
-                            filter: drop-shadow(0 18px 28px rgba(0,0,0,0.45));
-                            background: transparent; object-fit:contain;" />
-            </div>
+    <div class="text-center" style="position:relative; z-index:10; padding: 24px;">
+        <div style="max-width:640px; width:min(86vw,640px); margin:0 auto; position:relative; z-index:10; text-align:center;">
+            <img src="images/header-front.png" alt="Shockadelica Films" loading="lazy"
+                 style="width:100%; height:auto; display:block;
+                        filter: drop-shadow(0 18px 28px rgba(0,0,0,0.45));
+                        background: transparent; object-fit:contain;" />
+        </div>
 
-            <!-- Buttons navigate within this page. They will unlock scrolling and smoothly move to the target section. -->
-            <div class="header-buttons" style="margin-top:18px;">
-                <a href="#about-section" class="header-btn btn-about" role="button">About Us</a>
-                <a href="#packages-section" class="header-btn btn-browse" role="button">Browse</a>
-        <button
-            type="button"
-            class="header-btn btn-book"
-            aria-haspopup="dialog"
-            aria-controls="checkoutModalBackdrop"
-            aria-label="Open booking modal"
-            onclick="openCheckoutModal(); setTimeout(function(){ var cb=document.getElementById('closeCheckoutBtn'); if(cb) cb.focus(); },50);"
-        >
-            Book Now
-        </button>
+        <!-- Buttons navigate within this page. They will unlock scrolling and smoothly move to the target section. -->
+        <div class="header-buttons" style="margin-top:18px;">
+            <a href="#about-section" class="header-btn btn-about" role="button">About Us</a>
+            <a href="#packages-section" class="header-btn btn-browse" role="button">Browse</a>
+            <button
+                type="button"
+                class="header-btn btn-book"
+                aria-haspopup="dialog"
+                aria-controls="checkoutModalBackdrop"
+                aria-label="Open booking modal"
+                onclick="openCheckoutModal(); setTimeout(function(){ var cb=document.getElementById('closeCheckoutBtn'); if(cb) cb.focus(); },50);"
+            >
+                Book Now
+            </button>
     </div>
             </div>
         </div>
@@ -688,7 +709,7 @@
             try {
                 // Retrieve an additional customer message input from the checkout form.
                 const customerInput = document.getElementById('customerInfo') ? document.getElementById('customerInfo').value : '';
-                const res = await fetch('https://shockadelica-stripe-dev.cameronmhbell.workers.dev/checkout', {
+                const res = await fetch('https://shockadelica-prod.cameronmhbell.workers.dev/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -701,7 +722,7 @@
                             type: "text",
                           },
                         ],
-                        success_url: "https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/viewform?usp=sf_link",
+                        success_url: "https://ignoreme.com/success",
                         cancel_url: "https://your-site.com/cancel",
                         meta: { summary: items.map(i => i.name).join(', ') }
                     })
@@ -734,7 +755,7 @@
 
                 <div style="max-width:920px; margin:0 auto; position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
                     <iframe
-                        src="https://calendar.google.com/calendar/embed?src=rayennoth%40gmail.com&ctz=Europe%2FLondon"
+                        src="https://calendar.google.com/calendar/embed?src=shockadelicafilms%40gmail.com&ctz=Europe%2FLondon"
                         style="position:absolute; left:0; top:0; width:100%; height:100%; border:0;"
                         frameborder="0"
                         scrolling="no"
@@ -794,7 +815,7 @@
                 </div>
                 <div style="margin-top:12px;">
                     <div class="package-carousel owl-carousel" data-items="1">
-                        <div class="portfolio-item" style="padding:20px; text-align:center;">Photo Set: "Psycha 01"</div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnkWkGV_LXHEVrvWIIHvNu6nBifwOiWtiB4oKR1Td3cDPtFHG7DPBhWQ1F4IgsCEnShG4&usqp=CAU" alt="Photo Set: Psycha 01" style="width:100%; height:auto; border-radius:12px;" />
                         <div class="portfolio-item" style="padding:20px; text-align:center;">Photo Set: "Glow"</div>
                         <div class="portfolio-item" style="padding:20px; text-align:center;">Photo Set: "Backstage"</div>
                     </div>
@@ -825,6 +846,7 @@
     </section>
 
         <!-- About Section and Donate (moved here for single flow) -->
+    <section id="about-section" class="content-section">
         <div class="about-section">
             <div class="about-content">
             <h2 class="section-title" style="margin-top:0;">About Shockadelica Films</h2>
@@ -838,6 +860,7 @@
             <div class="donate-section" style="margin-top:18px;">
                 <h3 class="text-2xl font-semibold mb-4" style="color: var(--dark-orange);">Support Our Creative Projects</h3>
                 <p style="color:var(--text-warm)">Help us fund short films and experimental work. Every donation helps us keep creating.</p>
+                <div style="margin-top:12px;"></div>
                 <a href="https://paypal.com/donate" target="_blank" class="donate-btn" rel="noopener">Donate Now</a>
             </div>
         </div>
@@ -848,7 +871,7 @@
         // Replace availabilityUrl with your scheduling app JSON endpoint (e.g. your backend, Calendly webhook data exporter, etc.)
         // Expected JSON: [{ "title": "Available"/"Booked", "start": "YYYY-MM-DD" }, ... ]
         // If you use a third-party app (Calendly/Setmore/etc.), either expose an endpoint returning their availability or embed their widget on book.html.
-        const availabilityUrl = 'https://example.com/api/availability'; // <-- REPLACE with your real endpoint
+        const availabilityUrl = 'https://example.com/api/availability'; // <- REPLACE with your real endpoint
 
         async function initCalendar() {
             const defaultEvents = [
