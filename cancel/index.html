@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Error Page - Shockadelica Films</title>
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Fonts -->
+    <link href="https://fonts.cdnfonts.com/css/psycha" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --font-logo: "Psycha", serif;
+            --font-body: "Inter", sans-serif;
+            --dark-orange: #9b2e00;
+            --warm-orange: #D77111;
+            --light-orange: #FFAC33;
+            --yellow: #FFD15A;
+            --cream: #FFF8DC;
+            --warm-white: #FFFEF7;
+            --text-warm: #BB5A00;
+        }
+        body {
+            font-family: var(--font-body);
+            background: url('/images/header-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        /* Adding an overlay for better readability */
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+        </style>
+    </head>
+    <body class="min-h-screen flex items-center justify-center ">
+        <div class="overlay p-12 rounded-xl shadow-lg max-w-lg text-center">
+            <h1 class="text-6xl font-extrabold mb-4" style="font-family: var(--font-logo); color: var(--warm-orange);">Oops!</h1>
+            <p class="text-lg mb-6" style="font-family: var(--font-body); color: var(--text-warm);">You exited out of the transaction.</p>
+            <a href="/" class="px-8 py-3 bg-[var(--cream)] text-black rounded-lg transition-colors duration-200 hover:bg-gray-200 font-semibold">Home</a>
+        </div>
+    </body>
+    </html>
