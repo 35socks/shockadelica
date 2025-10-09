@@ -305,13 +305,19 @@
         @media (max-width: 768px) {
             .header-buttons {
                 flex-direction: column !important;
-                gap: 2px !important;
-                margin-top: 8px !important;
+                gap: 0 !important;
+                margin-top: 0 !important;
+                padding: 0 !important;
             }
             .header-buttons a,
             .header-buttons button {
-                width: 140px !important;
-                height: 140px !important;
+                width: 136px !important;
+                height: 136px !important;
+                margin: -10px 0 !important; /* pull items closer together */
+            }
+            .header-buttons a:hover,
+            .header-buttons button:hover {
+                transform: none !important; /* avoid tap-zoom gaps on mobile */
             }
         }
     </style>
