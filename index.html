@@ -66,8 +66,8 @@
         :root {
             --font-logo: "Psycha", serif;
             --font-body: "Inter", sans-serif;
-            --dark-orange: #9b2e00;
-            --warm-orange: #D77111; /* stronger orange */
+            --dark-orange: #ffe600;
+            --warm-orange: #d6cd46; /* stronger orange */
             --light-orange: #FFAC33;
             --yellow: #FFD15A;
             --cream: #FFF8DC;
@@ -84,65 +84,6 @@
         }
 
         html { scroll-behavior: smooth; }
-
-        /* Psychedelic smooth gradient, shifted toward orange/yellow */
-        .psychedelic-bg {
-            position: absolute;
-            inset: 0;
-            background-image:
-            radial-gradient(circle at 25% 30%,
-                #FFF0C2 0%,
-                rgba(255,230,170,0.95) 6%,
-                rgba(255,170,40,0.95) 20%,
-                rgba(255,200,80,0.45) 48%,
-                rgba(230,120,20,0.85) 100%
-            ),
-            radial-gradient(circle at 75% 70%,
-                rgba(255,190,40,0.95) 0%,
-                rgba(255,220,120,0.6) 28%,
-                rgba(210,120,30,0.45) 60%,
-                rgba(200,90,20,0.85) 100%
-            );
-            background-repeat: no-repeat;
-            background-size: 240% 240%;
-            background-position: center;
-            filter: blur(30px) saturate(1.1);
-            pointer-events: none;
-            will-change: background-position, filter;
-            animation: bgShift 45s ease-in-out infinite;
-        }
-
-        .psychedelic-overlay {
-            position: absolute;
-            inset: 0;
-            background-image:
-            conic-gradient(from 140deg at 50% 50%,
-                rgba(255,180,30,0.06),
-                rgba(255,210,120,0.06),
-                rgba(210,105,30,0.04),
-                rgba(200,90,20,0.03),
-                rgba(255,190,40,0.06)
-            );
-            mix-blend-mode: overlay;
-            opacity: 0.9;
-            pointer-events: none;
-            will-change: transform, opacity;
-            animation: overlayPulse 30s ease-in-out infinite;
-        }
-
-        @keyframes bgShift {
-            0% { background-position: -12% -8%, 112% 108%; filter: blur(28px) saturate(1.08); }
-            25% { background-position: 18% 28%, 82% 72%; filter: blur(30px) saturate(1.1); }
-            50% { background-position: 50% 60%, 60% 40%; filter: blur(32px) saturate(1.12); }
-            75% { background-position: 32% 42%, 94% 58%; filter: blur(30px) saturate(1.09); }
-            100% { background-position: -12% -8%, 112% 108%; filter: blur(28px) saturate(1.08); }
-        }
-
-        @keyframes overlayPulse {
-            0% { transform: scale(1); opacity: 0.86; }
-            50% { transform: scale(1.035); opacity: 0.94; }
-            100% { transform: scale(1); opacity: 0.86; }
-        }
 
         .header { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .header .psychedelic-bg, .header .psychedelic-overlay { z-index: 1; }
@@ -231,162 +172,24 @@
 
         /* Desktop grid for packages */
         .package-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width:1200px; margin: 0 auto; }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header class="header" role="banner" aria-label="Hero header — Shockadelica Films" style="position:relative;">
-    <div class="header-bg" aria-hidden="true" style="position:absolute; inset:0; background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('images/header-bg.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; filter:brightness(0.78) saturate(1.05) contrast(0.98); z-index:0; pointer-events:none;"></div>
 
-
-    <div class="text-center" style="position:relative; z-index:10; padding: 24px;">
-        <div style="max-width:640px; width:min(86vw,640px); margin:0 auto; position:relative; z-index:10; text-align:center;">
-            <img src="images/header-front.png" alt="Shockadelica Films" loading="lazy"
-                 style="width:100%; height:auto; display:block;
-                        filter: drop-shadow(0 18px 28px rgba(0,0,0,0.45));
-                        background: transparent; object-fit:contain;" />
-        </div>
-
-        <!-- Buttons navigate within this page. They will unlock scrolling and smoothly move to the target section. -->
-        <div class="header-buttons" style="margin-top:18px;">
-            <a href="#about-section" class="header-btn btn-about" role="button">About Us</a>
-            <a href="#packages-section" class="header-btn btn-browse" role="button">Browse</a>
-            <button
-                type="button"
-                class="header-btn btn-book"
-                aria-haspopup="dialog"
-                aria-controls="checkoutModalBackdrop"
-                aria-label="Open booking modal"
-                onclick="openCheckoutModal(); setTimeout(function(){ var cb=document.getElementById('closeCheckoutBtn'); if(cb) cb.focus(); },50);"
-            >
-                Book Now
-            </button>
-    </div>
-            </div>
-        </div>
-
-        <script>
-            (function() {
-                // Lock scroll on the main (hero) screen, but allow scrolling after two manual scroll actions.
-                const docEl = document.documentElement;
-                const body = document.body;
-                let locked = true;
-                let scrollAttempts = 0;
-
-                function unlockScroll() {
-                    if (!locked) return;
-                    docEl.style.overflow = '';
-                    body.style.overflow = '';
-                    window.removeEventListener('wheel', wheelHandler, { passive: false });
-                    window.removeEventListener('touchmove', touchMoveHandler, { passive: false });
-                    window.removeEventListener('keydown', keydownHandler, { passive: false });
-                    locked = false;
-                }
-
-                function wheelHandler(e) {
-                    scrollAttempts++;
-                    if (scrollAttempts >= 2) {
-                        unlockScroll();
-                        // Allow current event’s default scrolling behavior.
-                    } else {
-                        e.preventDefault();
-                    }
-                }
-
-                function touchMoveHandler(e) {
-                    scrollAttempts++;
-                    if (scrollAttempts >= 2) {
-                        unlockScroll();
-                    } else {
-                        e.preventDefault();
-                    }
-                }
-
-                function keydownHandler(e) {
-                    // For keys that would cause scrolling, count as a scroll attempt.
-                    const blocked = [' ', 'PageUp', 'PageDown', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
-                    if (blocked.includes(e.key)) {
-                        scrollAttempts++;
-                        if (scrollAttempts >= 2) {
-                            unlockScroll();
-                        } else {
-                            e.preventDefault();
-                        }
-                    }
-                }
-
-                function lockScroll() {
-                    if (!locked) return;
-                    // Hide scrollbars and prevent wheel/touch/key scrolling.
-                    docEl.style.overflow = 'hidden';
-                    body.style.overflow = 'hidden';
-                    window.addEventListener('wheel', wheelHandler, { passive: false });
-                    window.addEventListener('touchmove', touchMoveHandler, { passive: false });
-                    window.addEventListener('keydown', keydownHandler, { passive: false });
-                }
-
-                // Smoothly go to the section and unlock scrolling so user can continue navigating.
-                function gotoAndUnlock(hash) {
-                    const target = document.querySelector(hash);
-                    if (!target) {
-                        unlockScroll();
-                        return;
-                    }
-                    unlockScroll();
-                    setTimeout(() => {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        target.setAttribute('tabindex', '-1');
-                        target.focus({ preventScroll: true });
-                    }, 50);
-                }
-
-                // Attach handlers to header buttons (anchors with hashes) only on the main screen.
-                function initButtons() {
-                    const buttons = document.querySelectorAll('.header .header-btn');
-                    buttons.forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            const href = this.getAttribute('href') || '';
-                            if (!href.startsWith('#')) return;
-                            e.preventDefault();
-                            gotoAndUnlock(href);
-                            history.replaceState(null, '', href);
-                        });
-                    });
-                }
-
-                // Prevent focus from leaving header while locked.
-                function trapTabFocus() {
-                    const focusables = Array.from(document.querySelectorAll('a,button,input,select,textarea,[tabindex]'))
-                        .filter(el => el.offsetParent !== null);
-                    if (focusables.length) {
-                        document.addEventListener('focusin', (e) => {
-                            if (!locked) return;
-                            const header = document.querySelector('header.header');
-                            if (header && !header.contains(e.target)) {
-                                const firstBtn = header.querySelector('.header-btn');
-                                if (firstBtn) firstBtn.focus();
-                            }
-                        });
-                    }
-                }
-
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', () => {
-                        lockScroll();
-                        initButtons();
-                        trapTabFocus();
-                    });
-                } else {
-                    lockScroll();
-                    initButtons();
-                    trapTabFocus();
-                }
-            })();
-        </script>
-    </header>
-
-<!-- Styled Checkout Modal -->
-<style>
+            .header-buttons a,
+            .header-buttons button {
+                display: inline-block;
+                width: 256px;
+                height: 256px;
+                transition: transform 0.3s ease;
+            }
+            .header-buttons a img,
+            .header-buttons button img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+            .header-buttons a:hover,
+            .header-buttons button:hover {
+                transform: scale(1.2);
+            }
     /* Modal overlay + panel */
     #checkoutModalBackdrop {
         display: none;
@@ -437,22 +240,8 @@
     @media (max-width:880px) {
         .packages-grid { grid-template-columns: 1fr; }
     }
-</style>
 
-<!-- Modal backdrop + panel -->
-<div id="checkoutModalBackdrop" aria-hidden="true">
-    <div id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
-        <header style="position: relative; text-align: center;">
-            <h2 id="checkoutTitle" style="margin: 0; position: absolute; left: 50%; transform: translateX(-50%);">Select Packages &amp; Tiers</h2>
-            <div style="height: 20px;"></div>
-            <button class="closeBtn" aria-label="Close checkout modal" id="closeCheckoutBtn" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">&times;</button>
-        </header>
-
-        <form id="cartForm" novalidate>
-            <p style="color:var(--text-warm); margin:0 0 8px 0;text-align: center;">Choose which services you want. Tick the package, then pick a tier for that package.</p>
-
-            <style>
-                /* Inline styles for package toggle row inside modal */
+                    /* Inline styles for package toggle row inside modal */
                 .pkg-toggle-row { display:flex; gap:10px; justify-content:space-between; align-items:center; margin:8px 0 12px 0; flex-wrap:wrap; }
                 .pkg-select-btn {
                     flex:1 1 auto;
@@ -474,7 +263,70 @@
                 }
                 .package-card-modal { transition: box-shadow .18s ease, border-color .18s ease; border:1px solid rgba(200,90,20,0.06); }
                 .package-card-modal.selected { border-color: var(--warm-orange); box-shadow: 0 12px 36px rgba(210,110,30,0.06); }
-            </style>
+    </style>
+</head>
+<body>
+    <!-- Hero/Front Page -->
+    <header class="header" role="banner" aria-label="Hero header — Shockadelica Films" style="position:relative;">
+        <div class="header-bg" aria-hidden="true" style="position:absolute; inset:0; background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('images/header-bg.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; filter:brightness(0.78) saturate(1.05) contrast(0.98); z-index:0; pointer-events:none;"></div>
+
+        <div class="text-center" style="position:relative; z-index:10; padding: clamp(16px, 4vw, 24px); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+            <div style="max-width:640px; width:min(90vw,640px); margin:0 auto 0; position:relative; z-index:10; text-align:center;">
+                <img src="images/gif.gif" alt="Shockadelica Films" loading="lazy"
+                     style="width:100%; height:auto; display:block;
+                            filter: drop-shadow(0 18px 28px rgba(0,0,0,0.45));
+                            background: transparent; object-fit:contain;" />
+            </div>
+
+            <!-- Buttons -->
+            <div class="header-buttons" style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; max-width: 680px; padding: 0 16px;">
+                <a href="#about-section" role="button" style="background: none; padding: 0; border: none; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center;">
+                    <img src="images/buttons/about.png" alt="About Us" style="width: 100%; height: 100%; object-fit: contain;">
+                </a>
+                <a href="#packages-section" role="button" style="background: none; padding: 0; border: none; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center;">
+                    <img src="images/buttons/browse.png" alt="Browse" style="width: 100%; height: 100%; object-fit: contain;">
+                </a>
+                <button
+                    type="button"
+                    role="button"
+                    style="background: none; padding: 0; border: none; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    aria-haspopup="dialog"
+                    aria-controls="checkoutModalBackdrop"
+                    aria-label="Open booking modal"
+                    onclick="openCheckoutModal(); setTimeout(function(){ var cb=document.getElementById('closeCheckoutBtn'); if(cb) cb.focus(); },50);"
+                >
+                    <img src="images/buttons/book.png" alt="Book Now" style="width: 100%; height: 100%; object-fit: contain;">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        @media (max-width: 768px) {
+            .header-buttons {
+                flex-direction: column !important;
+                gap: 2px !important;
+                margin-top: 8px !important;
+            }
+            .header-buttons a,
+            .header-buttons button {
+                width: 140px !important;
+                height: 140px !important;
+            }
+        }
+    </style>
+
+<!-- Modal backdrop + panel -->
+<div id="checkoutModalBackdrop" aria-hidden="true">
+    <div id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+        <header style="position: relative; text-align: center;">
+            <h2 id="checkoutTitle" style="margin: 0; position: absolute; left: 50%; transform: translateX(-50%);">Select Packages &amp; Tiers</h2>
+            <div style="height: 20px;"></div>
+            <button class="closeBtn" aria-label="Close checkout modal" id="closeCheckoutBtn" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">&times;</button>
+        </header>
+
+        <form id="cartForm" novalidate>
+            <p style="color:var(--text-warm); margin:0 0 8px 0;text-align: center;">Choose which services you want. Tick the package, then pick a tier for that package.</p>
             <header class="checkout-info" style="margin-bottom: 16px; text-align: center; font-size: 1rem; font-weight: 400; color: var(--text-warm);">
                 Please process your payment, then you'll be taken to fill out additional information on a Google form. Our team will then reach out within 24hrs to personally confirm your booking. Thanks!
             </header>
@@ -772,9 +624,9 @@
             <h2 class="section-title">Available Dates</h2>
             <div class="calendar-container" style="text-align:center;">
 
-                <div style="max-width:920px; margin:0 auto; position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+                <div style="max-width:920px; margin:0 auto; position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.08); background:#FFD700;">
                     <iframe
-                        src="https://calendar.google.com/calendar/embed?src=shockadelicafilms%40gmail.com&ctz=Europe%2FLondon"
+                        src="https://calendar.google.com/calendar/embed?src=shockadelicafilms%40gmail.com&ctz=Europe%2FLondon&bgcolor=%23FFFF00"
                         style="position:absolute; left:0; top:0; width:100%; height:100%; border:0;"
                         frameborder="0"
                         scrolling="no"
@@ -787,7 +639,7 @@
         </div>
     </section>
 
-    <!-- Combined Packages + Portfolio -->
+    <!-- Packages -->
     <section id="packages-section" class="content-section">
         <div class="packages-section" style="display: flex; flex-direction: row; justify-content: center; gap: 24px; overflow-x: auto; padding: 24px;">
             <!-- Videography -->
@@ -814,22 +666,7 @@
                         <li>Sent as individual videos and also one long video</li>
                     </ul>
                 </div>
-                <div style="margin-top:12px;">
-                    <div class="package-carousel owl-carousel" data-items="1" aria-hidden="false" aria-label="Videography samples">
-                        <figure class="portfolio-item" style="display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
-                            <img src="/images/portfolio/video1.jpg" alt="Still from 'Lorem Ipsum' music video" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                            <figcaption style="margin-top:8px; font-weight:700; color:var(--cream); text-shadow:0 2px 6px rgba(0,0,0,0.35);">Video: "Lorem Ipsum"</figcaption>
-                        </figure>
-                        <figure class="portfolio-item" style="display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
-                            <img src="/images/portfolio/video2.jpg" alt="Still from 'Glow' music video" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                            <figcaption style="margin-top:8px; font-weight:700; color:var(--cream); text-shadow:0 2px 6px rgba(0,0,0,0.35);">Video: "Glow"</figcaption>
-                        </figure>
-                        <figure class="portfolio-item" style="display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
-                            <img src="/images/portfolio/video3.jpg" alt="Still from 'Backstage' filmmaking clip" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                            <figcaption style="margin-top:8px; font-weight:700; color:var(--cream); text-shadow:0 2px 6px rgba(0,0,0,0.35);">Video: "Backstage"</figcaption>
-                        </figure>
-                    </div>
-                </div>
+               
             </div>
 
             <!-- Photography -->
@@ -851,13 +688,7 @@
                         <li>Sent within 2 weeks</li>
                     </ul>
                 </div>
-                <div style="margin-top:12px;">
-                    <div class="package-carousel owl-carousel" data-items="1">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnkWkGV_LXHEVrvWIIHvNu6nBifwOiWtiB4oKR1Td3cDPtFHG7DPBhWQ1F4IgsCEnShG4&usqp=CAU" alt="Photo Set: Psycha 01" style="width:100%; height:auto; border-radius:12px;" />
-                        <div class="portfolio-item" style="padding:20px; text-align:center;">Photo Set: "Glow"</div>
-                        <div class="portfolio-item" style="padding:20px; text-align:center;">Photo Set: "Backstage"</div>
-                    </div>
-                </div>
+
             </div>
 
             <!-- Promo & Interviews -->
@@ -880,18 +711,315 @@
                         <li>BTS Photos (Approx 25-40 photos)</li>
                     </ul>
                 </div>
-                <div style="margin-top:12px;">
-                    <div class="package-carousel owl-carousel" data-items="1">
-                        <div class="portfolio-item" style="padding:20px; text-align:center;">Promo: "Artist Intro"</div>
-                        <div class="portfolio-item" style="padding:20px; text-align:center;">Interview: "On Tour"</div>
-                        <div class="portfolio-item" style="padding:20px; text-align:center;">Behind the Scenes</div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-        <!-- About Section and Donate (moved here for single flow) -->
+    <!-- Portfolio Section -->
+    <section id="portfolio-section" class="content-section">
+        <div style="padding: 80px 24px; background: linear-gradient(180deg, #FFF6E6 0%, var(--warm-white) 100%);">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 16px;">Portfolio</h2>
+            <p style="text-align: center; color: var(--text-warm); max-width: 600px; margin: 0 auto 48px; font-size: 1.1rem;">Explore our creative work across videography, photography, and promotional content</p>
+            
+            <!-- Filter Tabs -->
+            <div class="portfolio-filters" style="display: flex; justify-content: center; gap: 16px; margin-bottom: 48px; flex-wrap: wrap;">
+                <button class="filter-btn active" data-filter="all" style="padding: 12px 28px; border-radius: 25px; border: 2px solid var(--warm-orange); background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">All Work</button>
+                <button class="filter-btn" data-filter="videography" style="padding: 12px 28px; border-radius: 25px; border: 2px solid var(--warm-orange); background: white; color: var(--text-warm); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Videography</button>
+                <button class="filter-btn" data-filter="photography" style="padding: 12px 28px; border-radius: 25px; border: 2px solid var(--warm-orange); background: white; color: var(--text-warm); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Photography</button>
+                <button class="filter-btn" data-filter="promo" style="padding: 12px 28px; border-radius: 25px; border: 2px solid var(--warm-orange); background: white; color: var(--text-warm); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Promo &amp; Interviews</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-masonry" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; max-width: 1400px; margin: 0 auto;">
+                
+                <!-- Video Item 1 -->
+                <article class="portfolio-item-card" data-category="videography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                    <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden; background: linear-gradient(135deg, var(--light-orange), var(--warm-orange));">
+                        <div class="custom-video-player" style="width: 100%; height: 100%; position: relative; background: #000;">
+                            <video class="portfolio-video" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata">
+                                <source src="https://shockadelica.s3.eu-west-2.amazonaws.com/woodhall-comp.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; transition: background 0.3s ease;">
+                                <button class="play-btn" aria-label="Play video" style="width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.95); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease;">
+                                    <i class="fa-solid fa-play" style="color: var(--dark-orange); font-size: 28px; margin-left: 4px;"></i>
+                                </button>
+                            </div>
+                            <div class="video-controls" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 16px; display: none; align-items: center; gap: 12px;">
+                                <button class="control-btn play-pause" aria-label="Play/Pause" style="background: none; border: none; color: white; cursor: pointer; font-size: 20px;">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                                <input type="range" class="progress-bar" value="0" max="100" style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); appearance: none; cursor: pointer;">
+                                <span class="time-display" style="color: white; font-size: 13px; font-weight: 500;">0:00 / 0:00</span>
+                                <button class="control-btn fullscreen-btn" aria-label="Fullscreen" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content" style="padding: 24px;">
+                        <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Videography</span>
+                        <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Lorem Ipsum</h3>
+                        <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">Energetic live performance captured with multiple angles and professional editing.</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Live Show</span>
+                            <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Multi-Cam</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Video Item 2 (Lucid) -->
+                <article class="portfolio-item-card" data-category="videography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                    <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden; background: linear-gradient(135deg, var(--light-orange), var(--warm-orange));">
+                        <div class="custom-video-player" style="width: 100%; height: 100%; position: relative; background: #000;">
+                            <video class="portfolio-video" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata">
+                                <source src="https://shockadelica.s3.eu-west-2.amazonaws.com/lucid.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; transition: background 0.3s ease;">
+                                <button class="play-btn" aria-label="Play video" style="width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.95); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease;">
+                                    <i class="fa-solid fa-play" style="color: var(--dark-orange); font-size: 28px; margin-left: 4px;"></i>
+                                </button>
+                            </div>
+                            <div class="video-controls" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 16px; display: none; align-items: center; gap: 12px;">
+                                <button class="control-btn play-pause" aria-label="Play/Pause" style="background: none; border: none; color: white; cursor: pointer; font-size: 20px;">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                                <input type="range" class="progress-bar" value="0" max="100" style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); appearance: none; cursor: pointer;">
+                                <span class="time-display" style="color: white; font-size: 13px; font-weight: 500;">0:00 / 0:00</span>
+                                <button class="control-btn fullscreen-btn" aria-label="Fullscreen" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content" style="padding: 24px;">
+                        <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Videography</span>
+                        <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Lucid</h3>
+                        <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">Dynamic live performance with professional multi-camera coverage and audio mixing.</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Live Show</span>
+                            <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Multi-Cam</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Video Item 3 (Backbone) -->
+                <article class="portfolio-item-card" data-category="videography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                    <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden; background: linear-gradient(135deg, var(--light-orange), var(--warm-orange));">
+                        <div class="custom-video-player" style="width: 100%; height: 100%; position: relative; background: #000;">
+                            <video class="portfolio-video" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata">
+                                <source src="https://shockadelica.s3.eu-west-2.amazonaws.com/backbone.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; transition: background 0.3s ease;">
+                                <button class="play-btn" aria-label="Play video" style="width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.95); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease;">
+                                    <i class="fa-solid fa-play" style="color: var(--dark-orange); font-size: 28px; margin-left: 4px;"></i>
+                                </button>
+                            </div>
+                            <div class="video-controls" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 16px; display: none; align-items: center; gap: 12px;">
+                                <button class="control-btn play-pause" aria-label="Play/Pause" style="background: none; border: none; color: white; cursor: pointer; font-size: 20px;">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                                <input type="range" class="progress-bar" value="0" max="100" style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); appearance: none; cursor: pointer;">
+                                <span class="time-display" style="color: white; font-size: 13px; font-weight: 500;">0:00 / 0:00</span>
+                                <button class="control-btn fullscreen-btn" aria-label="Fullscreen" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content" style="padding: 24px;">
+                        <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Videography</span>
+                        <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Backbone</h3>
+                        <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">High-energy live session capturing raw performance with multiple camera angles.</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Live Show</span>
+                            <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Multi-Cam</span>
+                        </div>
+                    </div>
+                </article>
+
+            <!-- Photo Item 1 -->
+            <article class="portfolio-item-card" data-category="photography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden;">
+                    <img src="https://shockadelica.s3.eu-west-2.amazonaws.com/photos/1.jpg" alt="Photography sample" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                    <div class="image-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                </div>
+                <div class="portfolio-content" style="padding: 24px;">
+                    <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Photography</span>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Photo Set 1</h3>
+                    <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">Professional live performance photography with creative editing.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Live Show</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Photo Item 2 -->
+            <article class="portfolio-item-card" data-category="photography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden;">
+                    <img src="https://shockadelica.s3.eu-west-2.amazonaws.com/photos/2.jpg" alt="Photography sample" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                    <div class="image-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                </div>
+                <div class="portfolio-content" style="padding: 24px;">
+                    <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Photography</span>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Photo Set 2</h3>
+                    <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">Vibrant concert photography capturing the energy of live music.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Concert</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Photo Item 3 -->
+            <article class="portfolio-item-card" data-category="photography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden;">
+                    <img src="https://shockadelica.s3.eu-west-2.amazonaws.com/photos/3.jpg" alt="Photography sample" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                    <div class="image-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                </div>
+                <div class="portfolio-content" style="padding: 24px;">
+                    <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Photography</span>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Photo Set 3</h3>
+                    <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">Dynamic stage photography with psychedelic-inspired editing.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Stage</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Photo Item 4 -->
+            <article class="portfolio-item-card" data-category="photography" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 2px solid rgba(255,176,0,0.08);">
+                <div class="portfolio-media" style="position: relative; height: 320px; overflow: hidden;">
+                    <img src="https://shockadelica.s3.eu-west-2.amazonaws.com/photos/4.jpg" alt="Photography sample" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                    <div class="image-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                </div>
+                <div class="portfolio-content" style="padding: 24px;">
+                    <span class="portfolio-tag" style="display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, var(--yellow), var(--light-orange)); color: white; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Photography</span>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-orange); margin-bottom: 8px;">Photo Set 4</h3>
+                    <p style="color: var(--text-warm); line-height: 1.6; margin-bottom: 16px;">Artistic performance photography with creative composition.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span style="padding: 4px 10px; background: rgba(255,176,0,0.1); border-radius: 8px; font-size: 12px; color: var(--text-warm); font-weight: 600;">Performance</span>
+                    </div>
+                </div>
+            </article>
+
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .portfolio-item-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(210,110,30,0.15) !important;
+        }
+        .portfolio-item-card:hover .portfolio-media img {
+            transform: scale(1.08);
+        }
+        .portfolio-item-card:hover .image-overlay {
+            opacity: 1;
+        }
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(210,110,30,0.15);
+        }
+        .filter-btn.active {
+            background: linear-gradient(90deg, var(--yellow), var(--light-orange)) !important;
+            color: white !important;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: white !important;
+        }
+        .progress-bar::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--yellow);
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .portfolio-masonry {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+    <script>
+        // Portfolio filtering
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                document.querySelectorAll('.portfolio-item-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.style.opacity = '1', 10);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // Custom video player controls
+        document.querySelectorAll('.custom-video-player').forEach(player => {
+            const video = player.querySelector('.portfolio-video');
+            const overlay = player.querySelector('.video-overlay');
+            const playBtn = player.querySelector('.play-btn');
+            const controls = player.querySelector('.video-controls');
+            const playPauseBtn = controls.querySelector('.play-pause');
+            const progressBar = controls.querySelector('.progress-bar');
+            const timeDisplay = controls.querySelector('.time-display');
+            const fullscreenBtn = controls.querySelector('.fullscreen-btn');
+
+            playBtn.addEventListener('click', () => {
+                video.play();
+                overlay.style.display = 'none';
+                controls.style.display = 'flex';
+            });
+
+            playPauseBtn.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                } else {
+                    video.pause();
+                    playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                }
+            });
+
+            video.addEventListener('timeupdate', () => {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.value = progress;
+                
+                const currentMin = Math.floor(video.currentTime / 60);
+                const currentSec = Math.floor(video.currentTime % 60);
+                const durationMin = Math.floor(video.duration / 60);
+                const durationSec = Math.floor(video.duration % 60);
+                timeDisplay.textContent = `${currentMin}:${currentSec.toString().padStart(2, '0')} / ${durationMin}:${durationSec.toString().padStart(2, '0')}`;
+            });
+
+            progressBar.addEventListener('input', () => {
+                const time = (progressBar.value / 100) * video.duration;
+                video.currentTime = time;
+            });
+
+            fullscreenBtn.addEventListener('click', () => {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                }
+            });
+
+            video.addEventListener('ended', () => {
+                overlay.style.display = 'flex';
+                controls.style.display = 'none';
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            });
+        });
+    </script>
+
+        <!-- About -->
     <section id="about-section" class="content-section">
         <div class="about-section">
             <div class="about-content">
@@ -924,29 +1052,14 @@
             </div>
             <div style="text-align: center;">
                 <!-- Changed to a link so clicking smoothly scrolls (thanks to CSS scroll-behavior) -->
-                <a href="#reviews-section" class="header-btn btn-book" style="padding: 12px 24px; margin: 0 auto;">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScwkmsEkX6cNGzSDqAQsf20g9Nwe9zuhrcG_ikb84iykq_Ozg/viewform?usp=dialog" class="header-btn btn-book" style="padding: 12px 24px; margin: 0 auto;">
                     Leave a Review
                 </a>
             </div>
         </div>
     </section>
-    <script>
-    document.addEventListener('DOMContentLoaded', function(){
-        $('.reviews-carousel').owlCarousel({
-            loop: true,
-            margin: 12,
-            nav: false,
-            dots: false,
-            autoplay: true,
-            autoplayTimeout: 5000,
-            responsive: {
-                0: { items: 1 },
-                768: { items: 3 }
-            }
-        });
-    });
-    </script>
 
+<!-- Donations -->
             <div class="donate-section" style="margin-top:18px;">
                 <h3 class="text-2xl font-semibold mb-4" style="color: var(--dark-orange);">Support Our Creative Projects</h3>
                 <p style="color:var(--text-warm)">Help us fund short films and experimental work. Every donation helps us keep creating.</p>
@@ -960,7 +1073,6 @@
             &copy; <script>document.write(new Date().getFullYear());</script> Shockadelica Films
             </div>
             <div style="display: flex; gap: 24px;">
-            <!-- Ensure you include Font Awesome in your <head> for these icons to load -->
             <a href="mailto:shockadelicafilms@gmail.com" aria-label="Email" style="color: var(--yellow); font-size: 24px;">
                 <i class="fa-solid fa-envelope"></i>
             </a>
@@ -977,64 +1089,8 @@
         </footer>
 
     <script>
-        // FullCalendar loads availability from an external endpoint.
-        // Replace availabilityUrl with your scheduling app JSON endpoint (e.g. your backend, Calendly webhook data exporter, etc.)
-        // Expected JSON: [{ "title": "Available"/"Booked", "start": "YYYY-MM-DD" }, ... ]
-        // If you use a third-party app (Calendly/Setmore/etc.), either expose an endpoint returning their availability or embed their widget on book.html.
-        const availabilityUrl = 'https://example.com/api/availability'; // <- REPLACE with your real endpoint
-
-        async function initCalendar() {
-            const defaultEvents = [
-                { title: 'Booked', start: '2024-06-15' },
-                { title: 'Booked', start: '2024-06-22' },
-                { title: 'Booked', start: '2024-06-29' }
-            ];
-
-            let events = defaultEvents;
-            try {
-                const res = await fetch(availabilityUrl, { mode: 'cors' });
-                if (res.ok) {
-                    const json = await res.json();
-                    // Basic validation: expect array of event objects
-                    if (Array.isArray(json)) events = json;
-                } else {
-                    console.warn('Availability fetch failed, using default events.');
-                }
-            } catch (err) {
-                console.warn('Error fetching availability; using defaults.', err);
-            }
-
-            const calendarEl = document.getElementById('calendar');
-            if (calendarEl) {
-                const calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    selectable: true,
-                    height: 480,
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth'
-                    },
-                    events: events,
-                    select: function(info) {
-                        const selectedDate = new Date(info.startStr).toLocaleDateString('en-GB');
-                        if (confirm(`Request booking for ${selectedDate}?\nWe'll contact you within 24 hours to confirm details.`)) {
-                            alert('Booking request sent! We\'ll be in touch soon.');
-                        }
-                    },
-                    eventClick: function(info) {
-                        alert('This date is: ' + info.event.title + ' (' + info.event.start.toLocaleDateString() + ')');
-                    }
-                });
-                calendar.render();
-            }
-        }
-
-        // Initialize carousels and calendar after DOM is ready
+        // Initialize carousels 
         document.addEventListener('DOMContentLoaded', function() {
-            initCalendar();
-
-            // Main category carousels
             $('.package-carousel').owlCarousel({
                 loop: true,
                 margin: 12,
@@ -1045,7 +1101,18 @@
                 responsive: { 0: { items: 1 }, 600: { items: 2 }, 1000: { items: 3 } }
             });
 
-            // If you want separate larger galleries, initialize additional carousels here.
+                    $('.reviews-carousel').owlCarousel({
+            loop: true,
+            margin: 12,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            responsive: {
+                0: { items: 1 },
+                768: { items: 3 }
+            }
+        });
         });
     </script>
 </body>
